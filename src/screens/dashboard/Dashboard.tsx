@@ -23,7 +23,6 @@ import {
   setResolution,
   toggleLocationTagging,
 } from '../../redux/actions/settingsActions';
-import RNFS from 'react-native-fs';
 import moment from 'moment-timezone';
 
 import { styles } from './Dashboard.styles';
@@ -91,8 +90,15 @@ useEffect(() => {
     })();
   }, []);
   async function requestCameraPermissions() {
-    const camStatus: any = await Camera.getCameraPermissionStatus();
-    const micStatus: any = await Camera.getMicrophonePermissionStatus();
+    // const camStatus: any = await Camera.getCameraPermissionStatus();
+    // const micStatus: any = await Camera.getMicrophonePermissionStatus();
+
+    const camStatus = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+    );
+    const micStatus = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+    );
 
     if (camStatus !== 'granted') {
       const camReq: any = await Camera.requestCameraPermission();
@@ -173,7 +179,7 @@ useEffect(() => {
 
   return (
     <View style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}>
-       <StatusBar
+      <StatusBar
         barStyle={isDark ? 'light-content' : 'dark-content'}
         backgroundColor={isDark ? '#000' : '#fff'}
       />

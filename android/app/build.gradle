@@ -95,9 +95,9 @@ android {
         }
         release {
             storeFile file('revalsys.keystore')
-            storePassword '123456'
+            storePassword 'revalsys@123'
             keyAlias 'revalsys'
-            keyPassword '123456'
+            keyPassword 'revalsys@123'
         }
     }
     buildTypes {
@@ -107,8 +107,9 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
